@@ -70,11 +70,12 @@ int main(int ac, char **argv){
 
   /* write(STDOUT_FILENO, lineptr, strlen(lineptr)); */
 
+  
+
+}
   /*free up the allocated space*/
   free(lineptr);
   free(argv);
-
-}
   free(lineptr_copy);
   return (0);
 }
