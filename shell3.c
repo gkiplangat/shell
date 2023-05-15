@@ -68,6 +68,9 @@ int main(int ac, char **argv){
 
   /*free up the allocated space*/
   free(lineptr);
+  free(lineptr_copy);
+  free(argv);
+
 }
   return (0);
 }
