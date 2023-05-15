@@ -61,6 +61,10 @@ int main(int ac, char **argv){
         }
         argv[i] = NULL;
 
+        /* execute the command */
+        execmd(argv);
+
+
 
 
 
@@ -68,9 +72,9 @@ int main(int ac, char **argv){
 
   /*free up the allocated space*/
   free(lineptr);
-  free(lineptr_copy);
   free(argv);
 
 }
+  free(lineptr_copy);
   return (0);
 }
