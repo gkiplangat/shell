@@ -31,7 +31,11 @@ int main(int ac, char **argv){
     if (strcmp(lineptr, "exit") == 0) {
             exit_shell();
         }
-
+  /*print enviroment variables*/
+    if (strcmp(lineptr, "env") == 0) {
+        print_environment();
+        continue;
+    }
     /*Check whether it is the End Of File EOF*/
     if (written == EOF) {
     perror("Exiting ...");

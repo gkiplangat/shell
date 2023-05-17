@@ -12,5 +12,7 @@
 void execmd(char *argv[]);
 char *get_location(char *command);
 void exit_shell();
+extern char **environ;
+void print_environment();
 
 #endif
