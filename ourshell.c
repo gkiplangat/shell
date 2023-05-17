@@ -13,6 +13,7 @@ int main(int ac, char **argv){
   int ntokens = 0; /*number of tokens*/
   char *tokens; /*tokens generated*/
   int i;
+  /*bool running = true;*/
 
   /* declaring void variables */
   (void)ac; 
@@ -20,7 +21,17 @@ int main(int ac, char **argv){
   /*creating a while loop*/
   while(1){
     write(STDOUT_FILENO, prompt, strlen(prompt));
+    
     written = getline(&lineptr, &n, stdin);
+
+    if (written > 0 && lineptr[written - 1] == '\n') {
+            lineptr[written - 1] = '\0';
+        }
+
+    if (strcmp(lineptr, "exit") == 0) {
+            /*running = false;*/
+            exit_shell();
+        }
 
     /*Check whether it is the End Of File EOF*/
     if (written == -1) {
