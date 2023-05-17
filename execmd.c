@@ -1,20 +1,29 @@
 #include "shell.h"
 
 
-void execmd(char **argv){
-    char *comd = NULL, *actual_comd = NULL;;
+void execmd(char *argv[]) {
+    pid_t pid = fork();
 
-    if (argv){
-        /* get the command from the user */
-        comd = argv[0];
+    if (pid == -1) {
+        perror("Error: Fork failed");
+        return;
+    } else if (pid == 0) {
+        /* Child process*/
+        char *comd = NULL;
+        char *actual_comd = NULL;
 
-        /* generate the path to this command before passing it to execve */
-        actual_comd = get_location(comd);
+        if (argv) {
+            comd = argv[0];
+            actual_comd = get_location(comd);
 
-        /* execute the actual command with execve */
-        if (execve(actual_comd, argv, NULL) == -1){
-            perror("Error:");
+            if (execve(actual_comd, argv, NULL) == -1) {
+                perror("Error: failed to execute, recheck your command.");
+                exit(1);  /* Exit child process on error */
+            }
         }
+    } else {
+        /* Parent process*/
+        wait(NULL);  /*Wait for the child process to finish*/
     }
-
 }
+

@@ -7,34 +7,33 @@ int main(int ac, char **argv){
   char *lineptr = NULL;
   /*Buffer to store the copy of what user typed in stdin*/
   char *lineptr_copy = NULL;
-  size_t n = 0; /*size of the memory to be allocated to the buffer*/
-  ssize_t written;/*stores the number of characters read by getline*/
-  const char *delim = " \n"; /*store delimeters*/
-  int ntokens = 0; /*number of tokens*/
-  char *tokens; /*tokens generated*/
+  size_t n = 0;                 /*size of the memory to be allocated to the buffer*/
+  ssize_t written;              /*stores the number of characters read by getline*/
+  const char *delim = " \n";    /*store delimeters*/
+  int ntokens = 0;              /*number of tokens*/
+  char *tokens;                 /*tokens generated*/
+  char **cmd_tokens;
   int i;
-  /*bool running = true;*/
 
   /* declaring void variables */
-  (void)ac; 
+  (void)ac;
+  (void)argv;
 
   /*creating a while loop*/
   while(1){
     write(STDOUT_FILENO, prompt, strlen(prompt));
     
     written = getline(&lineptr, &n, stdin);
-
     if (written > 0 && lineptr[written - 1] == '\n') {
             lineptr[written - 1] = '\0';
         }
-
+  /*exit shell*/
     if (strcmp(lineptr, "exit") == 0) {
-            /*running = false;*/
             exit_shell();
         }
 
     /*Check whether it is the End Of File EOF*/
-    if (written == -1) {
+    if (written == EOF) {
     perror("Exiting ...");
     return(-1);
   }
@@ -60,20 +59,20 @@ int main(int ac, char **argv){
         }
         ntokens++;
   /*allocate space to hold array of strings*/
-  argv = malloc(sizeof(char *) * ntokens);
+  cmd_tokens = malloc(sizeof(char *) * ntokens);
 
   tokens = strtok(lineptr_copy, delim);
 
         for (i = 0; tokens != NULL; i++){
-            argv[i] = malloc(sizeof(char) * strlen(tokens));
-            strcpy(argv[i], tokens);
+            cmd_tokens[i] = malloc(sizeof(char) * strlen(tokens));
+            strcpy(cmd_tokens[i], tokens);
 
             tokens = strtok(NULL, delim);
         }
-        argv[i] = NULL;
+        cmd_tokens[i] = NULL;
 
         /* execute the command */
-        execmd(argv);
+        execmd(cmd_tokens);
 
 
 
@@ -86,7 +85,7 @@ int main(int ac, char **argv){
 }
   /*free up the allocated space*/
   free(lineptr);
-  free(argv);
+  free(cmd_tokens);
   free(lineptr_copy);
   return (0);
 }
