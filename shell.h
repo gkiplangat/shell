@@ -13,6 +13,11 @@ void execmd(char *argv[]);
 char *get_location(char *command);
 void exit_shell();
 extern char **environ;
-void print_environment();
+void print_environment(void);
+void exit_shell(void);
+void print_environment(void);
+void execute_command(char **cmd_tokens);
+char *strcpy(char *dest, const char *src);
+char *strcat(char *dest, const char *src);
 
 #endif

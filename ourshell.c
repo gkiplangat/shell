@@ -6,7 +6,7 @@ void print_environment(void);
 void execute_command(char **cmd_tokens);
 
 /**
- * main -entry poin
+ * main -entry point
  *
  * @ac: - argument count
  * @argv: - argument vector
