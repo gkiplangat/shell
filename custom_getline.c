@@ -6,6 +6,11 @@ static void clear_buffer(void);
 static void add_to_buffer(char c);
 static void remove_from_buffer(void);
 
+/**
+ * custom_getline - reads input from the user 
+ * & dynamically allocates memory for the line
+ * return:  the line once a newline/EOF character is encountered
+ */
 
 char *custom_getline()
 {
@@ -57,6 +62,7 @@ char *custom_getline()
 	}
 	}
 }
+
 
 	int main(void)
 {
