@@ -9,7 +9,7 @@ static void remove_from_buffer(void);
 /**
  * custom_getline - reads input from the user
  * & dynamically allocates memory for the line
- * return:  the line once a newline/EOF character is encountered
+ * Return:  the line once a newline/EOF character is encountered
  */
 
 char *custom_getline()
@@ -64,7 +64,7 @@ char *custom_getline()
 }
 
 /**
- * main: entry point to the program
+ * main- entry point to the program
  * repeatedly promots user for text
  * displays entred text/line
  * Return: 0 if successful
