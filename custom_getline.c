@@ -2,72 +2,85 @@
 
 #define MAX_INPUT_SIZE 100
 
-char *custom_getline() {
-    static char buffer[MAX_INPUT_SIZE];
-    static int buffer_index = 0;
-    static int buffer_size = 0;
+static void clear_buffer(void);
+static void add_to_buffer(char c);
+static void remove_from_buffer(void);
 
-    char *line = NULL;
-    int line_size = 0;
-    int character;
 
-    while (1) {
-        /* If buffer is empty, read a new chunk of characters */
-        if (buffer_index >= buffer_size) {
-            buffer_size = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
-            buffer_index = 0;
+char *custom_getline()
+{
+	static char buffer[MAX_INPUT_SIZE];
+	static int buffer_index;
+	static int buffer_size;
 
-            /* If read returns 0 (end of file), return NULL to indicate end of input */
-            if (buffer_size == 0) {
-                if (line_size > 0) {
-                    line = realloc(line, (line_size + 1) * sizeof(char));
-                    line[line_size] = '\0';
-                }
-                return line;
-            }
-        }
+	char *line = NULL;
+	int line_size = 0;
+	int character;
 
-        character = buffer[buffer_index++];
-        
-        /* If maximum line size is reached, resize the line buffer */
-        if (line_size >= MAX_INPUT_SIZE - 1) {
-            line = realloc(line, (line_size + 2) * sizeof(char));
-            line[line_size + 1] = '\0';
-        }
+	while (1)
+	{
+	/* If buffer is empty, read a new chunk of characters */
+	if (buffer_index >= buffer_size)
+	{
+		buffer_size = read(STDIN_FILENO, buffer, MAX_INPUT_SIZE);
+		buffer_index = 0;
 
-        line[line_size++] = character;
+	/* If read returns 0 (end of file), return NULL to indicate end of input */
+	if (buffer_size == 0)
+	{
+	if (line_size > 0)
+	{
+		line = realloc(line, (line_size + 1) * sizeof(char));
+		line[line_size] = '\0';
+	}
+		return (line);
+		}
+	}
 
-        /* If end of line is reached, terminate the line and return it */
-        if (character == '\n') {
-            line = realloc(line, (line_size + 1) * sizeof(char));
-            line[line_size] = '\0';
-            return line;
-        }
-    }
+	character = buffer[buffer_index++];
+
+	/* If maximum line size is reached, resize the line buffer */
+	if (line_size >= MAX_INPUT_SIZE - 1)
+	{
+		line = realloc(line, (line_size + 2) * sizeof(char));
+		line[line_size + 1] = '\0';
+	}
+
+	line[line_size++] = character;
+
+	/* If end of line is reached, terminate the line and return it */
+	if (character == '\n')
+	{
+		line = realloc(line, (line_size + 1) * sizeof(char));
+		line[line_size] = '\0';
+		return (line);
+	}
+	}
 }
-int main() {
-    char *line;
-    const char *prompt = "Enter a line: ";
-    const int prompt_length = strlen(prompt);
-    ssize_t written;
 
-    while (1) {
-        written = write(STDOUT_FILENO, prompt, prompt_length);
+	int main(void)
+{
+	char *line;
+	const char *prompt = "Enter a line: ";
+	const int prompt_length = strlen(prompt);
+	ssize_t written;
 
-        if (written == -1)
-            break;
+	while (1)
+	{
+	written = write(STDOUT_FILENO, prompt, prompt_length);
 
-        line = custom_getline();
+	if (written == -1)
+	break;
 
-        if (line == NULL)
-            break;
+	line = custom_getline();
+	if (line == NULL)
+	break;
+	write(STDOUT_FILENO, "You entered: ", 13);
+	write(STDOUT_FILENO, line, strlen(line));
+	write(STDOUT_FILENO, "\n", 1);
 
-        write(STDOUT_FILENO, "You entered: ", 13);
-        write(STDOUT_FILENO, line, strlen(line));
-        write(STDOUT_FILENO, "\n", 1);
+	free(line);
+	}
 
-        free(line);
-    }
-
-    return 0;
+	return (0);
 }
