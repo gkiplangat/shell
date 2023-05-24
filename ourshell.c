@@ -50,7 +50,7 @@ int main(int ac, char **argv)
 
 	if (lineptr == NULL)
 	{
-		perror("tsh:memory allocation error");
+		perror("Error:memory allocation");
 		return (-1);
 	}
 
