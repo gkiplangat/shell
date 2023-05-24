@@ -1,11 +1,16 @@
+/* Function declarations */
+void exit_shell(void);
+void print_environment(void);
+void execute_command(char **cmd_tokens);
+
+#include "shell.h"
+
 /**
  * main - The main function that runs the simple shell
  * @ac: The number of arguments passed
  * @argv: Array of pointers to arguments passed
  * Return: Always 0 on success
 */
-
-#include "shell.h"
 
 int main(int ac, char **argv)
 {
@@ -21,7 +26,7 @@ int main(int ac, char **argv)
 
 	/* declaring void variables */
 	(void)ac;
-	
+
 	/*create a loop for prompt*/
 	while (1)
 	{
@@ -56,7 +61,7 @@ int main(int ac, char **argv)
 		token = strtok(NULL, delimeter);
 	}
 	numberOfTokens++;
-	
+
 	/*Allocate space to hold the array of strings*/
 	argv = malloc(sizeof(char *) * numberOfTokens);
 
