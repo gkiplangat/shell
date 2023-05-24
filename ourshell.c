@@ -30,7 +30,7 @@ int main(int ac, char **argv)
 	/*create a loop for prompt*/
 	while (1)
 	{
-		write(STDOUT_FILENO, prompt, strlen(prompt));
+		printf("$", prompt);
 	nChars_read = getline(&lineptr, &n, stdin);
 
 	if (nChars_read == -1)
@@ -84,6 +84,7 @@ int main(int ac, char **argv)
 	/* free up allocated memory*/
 	free(lineptr);
 	free(lineptrCopy);
+	free(argv);
 	}
 
 	return (0);
