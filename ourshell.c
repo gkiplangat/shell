@@ -84,7 +84,6 @@ int main(int ac, char **argv)
 	/* free up allocated memory*/
 	free(lineptr);
 	free(lineptrCopy);
-	free(argv);
 	}
 
 	return (0);
