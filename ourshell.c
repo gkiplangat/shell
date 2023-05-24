@@ -35,7 +35,7 @@ int main(int ac, char **argv)
 
 	if (nChars_read == -1)
 	{
-		perror("Exiting ...\n");
+		printf("Exiting ...\n");
 		return (-1);
 	}
 
@@ -44,7 +44,7 @@ int main(int ac, char **argv)
 
 	if (lineptr == NULL)
 	{
-		perror("Error:memory allocation");
+		printf("Error:memory allocation");
 		return (-1);
 	}
 
@@ -84,7 +84,7 @@ int main(int ac, char **argv)
 	/* free up allocated memory*/
 	free(lineptr);
 	free(lineptrCopy);
-	free(argv);
+	
 	}
 
 	return (0);
