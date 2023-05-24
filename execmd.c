@@ -15,7 +15,7 @@ void execmd(char *argv[])
 	comd = argv[0];
 	if (execve(comd, argv, NULL) == -1)
 	{
-	perror("Error: failed to execute, recheck your command.");
+	perror("Error:");
 
 	exit(1);  /* Exit child process on error */
 	}
