@@ -39,6 +39,12 @@ int main(int ac, char **argv)
 		return (-1);
 	}
 
+	/*exit shell*/
+	if (strcmp(lineptr, "exit") == 0)
+	{
+		exit_shell();
+	}
+
 	/*allocate space for a copy  of the lineptr*/
 	lineptrCopy = malloc(sizeof(char) * nChars_read);
 
