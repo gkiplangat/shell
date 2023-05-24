@@ -26,7 +26,6 @@ char *user_input(void)
 	/* get user inputs */
 	chars = getline(&lineptr, &len, stdin);
 
-	
 	if (chars == EOF)
 	{
 		free(lineptr);
@@ -60,6 +59,7 @@ int _compare_strings(char *s1, char *s2)
 	}
 	return (0);
 }
+char **_string_tokens(char *str);
 
 /**
  * main - point.
