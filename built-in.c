@@ -44,7 +44,6 @@ int _isBuiltIn(char *str)
  */
 int _executeBuiltIn(char **tokens)
 {
-	 
 	if ((_compare_strings(*tokens, "env")) == 0)
 	{
 		_printenv();
@@ -52,26 +51,22 @@ int _executeBuiltIn(char **tokens)
 	}
 	if ((_compare_strings(*tokens, "setenv")) == 0)
 	{
-		 
 		if (tokens[1] && tokens[2])
 		{
 			_setenv(tokens[1], tokens[2]);
 			return (0);
 		}
-		 
-		printf("Usage: setenv var_name var_value\n");
+	printf("Usage: setenv var_name var_value\n");
 		return (0);
 	}
 	if (_compare_strings(*tokens, "unsetenv") == 0)
 	{
-		 
 		if (tokens[1])
 		{
 			_unsetenv(tokens[1]);
 			return (0);
 		}
-		 
-		printf("Usage: unsetenv VAR_NAME\n");
+	printf("Usage: unsetenv VAR_NAME\n");
 		return (0);
 	}
 
