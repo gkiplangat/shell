@@ -30,7 +30,7 @@ int main(int ac, char **argv)
 	/*create a loop for prompt*/
 	while (1)
 	{
-		printf("$", prompt);
+	printf("%s", prompt);
 	nChars_read = getline(&lineptr, &n, stdin);
 
 	if (nChars_read == -1)
@@ -44,7 +44,7 @@ int main(int ac, char **argv)
 
 	if (lineptr == NULL)
 	{
-		printf("Error:memory allocation");
+		perror("tsh:memory allocation error");
 		return (-1);
 	}
 
@@ -83,8 +83,6 @@ int main(int ac, char **argv)
 
 	/* free up allocated memory*/
 	free(lineptr);
-	free(lineptrCopy);
-	
 	}
 
 	return (0);
