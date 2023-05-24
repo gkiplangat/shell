@@ -12,20 +12,20 @@ int _execute(char **tokens, char *args)
 	pid_t child_processId;
 	int status;
 	char *path;
-	 
+
 	if (_isBuiltIn(*tokens) == 0)
 	{
 		status = _executeBuiltIn(tokens);
 		return (status);
 	}
-	 
+
 	path = path_builder(tokens);
 	if (path != NULL)
 	{
 		status = execute2(tokens, path, args);
 		return (status);
 	}
-	 
+
 	child_processId = fork();
 	if (child_processId == -1)
 	{

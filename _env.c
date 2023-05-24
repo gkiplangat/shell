@@ -14,13 +14,13 @@ int _setenv(char *var_name, char *var_value)
 
 	name_length = _string_length(var_name);
 	i = 0;
-	
+
 	while (environ[i])
 	{
 		if (strncmp(environ[i], var_name, name_length) == 0)
 		{
 			new_variable = var_build(var_name, var_value);
-			
+
 			environ[i] = NULL;
 			environ[i] = _duplicate_string(new_variable);
 			free(environ[i]);
@@ -30,7 +30,7 @@ int _setenv(char *var_name, char *var_value)
 		}
 		i++;
 	}
-	
+
 	new_variable = var_build(var_name, var_value);
 	free(environ[i]);
 	environ[i] = _duplicate_string(new_variable);
@@ -59,7 +59,7 @@ char *var_build(char *var_name, char *var_value)
 		return (NULL);
 	}
 	memset(new_variable, 0, variable_length);
-	 
+
 	new_variable = _concat_strings(new_variable, var_name);
 	new_variable = _concat_strings(new_variable, "=");
 	new_variable = _concat_strings(new_variable, var_value);
