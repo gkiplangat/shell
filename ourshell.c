@@ -1,116 +1,82 @@
+/**
+ * main - The main function that runs the simple shell
+ * @ac: The number of arguments passed
+ * @argv: Array of pointers to arguments passed
+ * Return: Always 0 on success
+*/
+
 #include "shell.h"
 
-/* Function declarations */
-void exit_shell(void);
-void print_environment(void);
-void execute_command(char **cmd_tokens);
-
-/**
- * main -entry point
- *
- * @ac: - argument count
- * @argv: - argument vector
- * Return: 0 on success
- */
 int main(int ac, char **argv)
 {
-	char *prompt = "(ourshell) $ "; /*Holds the prompt message*/
-	/*Buffer to store the what user typed in stdin*/
-	char *lineptr = NULL;
-	/*Buffer to store the copy of what user typed in stdin*/
-	char *lineptr_copy = NULL;
-	/*size of the memory to be allocated to the buffer*/
-	size_t n = 0;
-	/*stores the number of characters read by getline*/
-	ssize_t written;
-	const char *delim = " \n";    /*store delimeters*/
-	int ntokens = 0;              /*number of tokens*/
-	char *tokens;                 /*tokens generated*/
-	char **cmd_tokens;
-	int i;
+	char *prompt = "$ ";
+	char *linePointer = NULL;
+	size_t bufferSize = 0;
+	ssize_t characters_read;
+	char *linePointerCopy = NULL;
+	const char *delimeter = " \n";
+	int numberOfTokens = 0;
+	char *token;
+	int a;
 
 	/* declaring void variables */
 	(void)ac;
-	(void)argv;
-
-	/*creating a while loop*/
+	
+	/*create a loop for prompt*/
 	while (1)
 	{
-	write(STDOUT_FILENO, prompt, strlen(prompt));
+	printf("%s", prompt);
+	characters_read = getline(&linePointer, &bufferSize, stdin);
 
-	written = getline(&lineptr, &n, stdin);
-
-	if (written > 0 && lineptr[written - 1] == '\n')
+	if (characters_read == -1)
 	{
-		lineptr[written - 1] = '\0';
-	}
-
-
-	/*exit shell*/
-	if (strcmp(lineptr, "exit") == 0)
-	{
-		exit_shell();
-	}
-
-	/*print enviroment variables*/
-	if (strcmp(lineptr, "env") == 0)
-	{
-	print_environment();
-	continue;
-	}
-	/*Check whether it is the End Of File EOF*/
-	if (written == EOF)
-	{
-		perror("Exiting ...");
+		printf("Exiting ...\n");
 		return (-1);
 	}
 
-	/*allocate space to store lineptr_copy*/
-	lineptr_copy = malloc(sizeof(char) * written);
+	/*allocate space for a copy  of the linePointer*/
+	linePointerCopy = malloc(sizeof(char) * characters_read);
 
-	/*Check wether memory allocation was successfully*/
-	if (lineptr_copy == NULL)
+	if (linePointer == NULL)
 	{
-		perror("Error: memory allocation failed...\n");
+		perror("tsh:memory allocation error");
 		return (-1);
 	}
 
-	/*copy the content of lineptr to lineptr_copy*/
-	strcpy(lineptr_copy, lineptr);
+	/*copy linePointer to linePointerCopy*/
+	strcpy(linePointerCopy, linePointer);
 
-	/* split the string into an array of words */
-	tokens = strtok(lineptr, delim);
+	/* split  the string (linePointer) into an array of words*/
+	/* calculate the total number of tokens*/
+	token = strtok(linePointer, delimeter);
 
-	/* determine number of tokens*/
-	while (tokens != NULL)
+	while (token != NULL)
 	{
-		ntokens++;
-		tokens = strtok(NULL, delim);
+		numberOfTokens++;
+		token = strtok(NULL, delimeter);
 	}
-	ntokens++;
+	numberOfTokens++;
+	
+	/*Allocate space to hold the array of strings*/
+	argv = malloc(sizeof(char *) * numberOfTokens);
 
-	/*allocate space to hold array of strings*/
-	cmd_tokens = malloc(sizeof(char *) * ntokens);
-	tokens = strtok(lineptr_copy, delim);
+	/*Store each token in the argv array*/
+	token = strtok(linePointerCopy, delimeter);
 
-	for (i = 0; tokens != NULL; i++)
+	for (a = 0; token != NULL; a++)
 	{
-		cmd_tokens[i] = malloc(sizeof(char) * strlen(tokens));
-		strcpy(cmd_tokens[i], tokens);
-		tokens = strtok(NULL, delim);
+		argv[a] = malloc(sizeof(char) * strlen(token));
+		strcpy(argv[a], token);
+
+		token = strtok(NULL, delimeter);
 	}
-	cmd_tokens[i] = NULL;
+	argv[a] = NULL;
 
-	/* execute the command */
-	execmd(cmd_tokens);
+	printf("%s\n", linePointer);
 
-	/* write(STDOUT_FILENO, lineptr, strlen(lineptr)); */
+	/* free up allocated memory*/
+	free(linePointer);
+	}
 
-	/*free up the allocated space*/
-
-	free(lineptr);
-	free(cmd_tokens);
-	free(lineptr_copy);
 	return (0);
-}
 }
