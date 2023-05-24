@@ -20,6 +20,4 @@ void execmd(char *argv[])
 	exit(1);  /* Exit child process on error */
 	}
 	}
-		
 }
-

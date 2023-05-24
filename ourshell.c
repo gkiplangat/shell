@@ -77,7 +77,9 @@ int main(int ac, char **argv)
 	}
 	argv[a] = NULL;
 
-	printf("%s\n", linePointer);
+	execmd(argv);
+
+	/* printf("%s\n", linePointer); */
 
 	/* free up allocated memory*/
 	free(linePointer);
