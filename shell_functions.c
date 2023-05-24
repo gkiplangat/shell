@@ -1,5 +1,20 @@
 #include "shell.h"
 
+/* Function declarations */
+int _string_length(char *s);
+char *_concat_strings(char *dest, char *src);
+unsigned int _check_space(char *s);
+char **_string_tokens(char *str);
+void _print_string(char *str);
+int _write_char(char c);
+int custom_atoi(char *s);
+char *_copy_string(char *dest, char *src);
+int check_for_delim(char c, const char *delim);
+char *_tokenize_string(char *src, const char *delim);
+void handle_ctrlc(int signum);
+ssize_t user_command(char **str);
+char *_duplicate_string(char *str);
+
 /**
  * _string_length - return string length.
  * @s: pointer to string.
@@ -134,9 +149,9 @@ int custom_atoi(char *s)
 
 	while (s[i] != '\0')
 	{
-		if (s[i] >= '0' && s[i] <= '9')  
+		if (s[i] >= '0' && s[i] <= '9')
 			number = number * 10 + (s[i] - '0');
-		if (s[i] > '9' || s[i] < '0')  
+		if (s[i] > '9' || s[i] < '0')
 			return (-1);
 		i++;
 	}
@@ -241,15 +256,14 @@ ssize_t user_command(char **str)
 	ssize_t i = 0, size = 0, t = 0, t2 = 0, n = 0;
 	char buff[1024];
 
-	 
 	while (t2 == 0 && (i = read(STDIN_FILENO, buff, 1024 - 1)))
 	{
-		if (i == -1)  
+		if (i == -1)
 			return (-1);
 
-		buff[i] = '\0';  
+		buff[i] = '\0';
 
-		n = 0;  
+		n = 0;
 		while (buff[n] != '\0')
 		{
 			if (buff[n] == '\n')
@@ -257,8 +271,7 @@ ssize_t user_command(char **str)
 			n++;
 		}
 
-		 
-		if (t == 0)  
+		if (t == 0)
 		{
 			i++;
 			*str = malloc(sizeof(char) * i);
@@ -266,7 +279,7 @@ ssize_t user_command(char **str)
 			size = i;
 			t = 1;
 		}
-		else  
+		else
 		{
 			size += i;
 			*str = _concat_strings(*str, buff);
@@ -275,7 +288,7 @@ ssize_t user_command(char **str)
 	return (size);
 }
 /**
- *  _dup_string - duplicates string.
+ *  _duplicate_string - duplicates string.
  *  @str: string to be duplicated.
  *  Return: pointer to duplicated string.
  */
