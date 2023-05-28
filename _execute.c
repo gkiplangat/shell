@@ -11,9 +11,9 @@ int _execute(char **tokens, char *args)
 	char *first_err, *second_err, *thirrd_err;
 	pid_t child_processId;
 	int status;
-	char *path;
+	/* char *path;*/
 
-	if (_isBuiltIn(*tokens) == 0)
+	/* if (_isBuiltIn(*tokens) == 0)
 	{
 		status = _executeBuiltIn(tokens);
 		return (status);
@@ -24,7 +24,7 @@ int _execute(char **tokens, char *args)
 	{
 		status = execute2(tokens, path, args);
 		return (status);
-	}
+	} */
 
 	child_processId = fork();
 	if (child_processId == -1)
