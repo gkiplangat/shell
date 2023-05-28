@@ -98,10 +98,11 @@ int main(int argc, char *argv[])
 			continue;
 		}
 
-		if (_compare_strings(tokens[0], "exit") == 0)
+		/* if (_compare_strings(tokens[0], "exit") == 0)
 		{
 			_exit_shell(tokens, linep);
 		}
+		*/
 		else
 		{
 			status =  _execute(tokens, argv[0]);
